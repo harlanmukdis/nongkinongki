@@ -1,4 +1,4 @@
-package suryakancana.nongkinongki.views;
+package suryakancana.nongkinongki.views.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

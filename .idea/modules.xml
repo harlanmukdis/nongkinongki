@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://D:\invent\Project Android\We\Nongkinongki\develop\nongkinongki\Nongki.iml" filepath="D:\invent\Project Android\We\Nongkinongki\develop\nongkinongki\Nongki.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\invent\Project Android\We\Nongkinongki\develop\nongkinongki\app\app.iml" filepath="D:\invent\Project Android\We\Nongkinongki\develop\nongkinongki\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/nongkinongki.iml" filepath="$PROJECT_DIR$/nongkinongki.iml" />
     </modules>
   </component>

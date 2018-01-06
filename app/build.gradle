@@ -62,4 +62,7 @@ dependencies {
 
     //bottombar
     compile 'com.roughike:bottom-bar:2.3.1'
+
+    //facebook
+    implementation 'com.facebook.android:facebook-login:[4,5)'
 }

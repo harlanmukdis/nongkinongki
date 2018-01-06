@@ -11,6 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_walkthrough_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignBottom="@+id/divider"/>
+
     <LinearLayout
         android:id="@+id/dots_walkthrough"
         android:layout_width="match_parent"
@@ -21,6 +31,7 @@
         android:orientation="horizontal"/>
 
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:alpha=".5"

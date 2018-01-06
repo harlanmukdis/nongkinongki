@@ -6,6 +6,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.facebook.FacebookSdk;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.orhanobut.hawk.Hawk;
 
@@ -37,6 +38,8 @@ public class NongkinongkiApp extends Application {
         mApp = this;
         mAPIService = RetrofitServiceFactory.createService(ServiceAPI.class);
         Hawk.init(getApplicationContext()).build();
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
     public boolean isNetworkAvailable () {

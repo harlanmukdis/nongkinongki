@@ -5,4 +5,8 @@
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
+
+    <!--region facebook-->
+    <string name="facebook_app_id">1994820380792199</string>
+    <string name="fb_login_protocol_scheme">fb1994820380792199</string>
 </resources>

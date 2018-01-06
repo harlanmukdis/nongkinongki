@@ -1,6 +1,7 @@
 package suryakancana.nongkinongki.views.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import java.util.Arrays;
 
 import suryakancana.nongkinongki.R;
 
@@ -30,8 +44,15 @@ public class WalkthroughActivity extends AppCompatActivity {
     private ViewPagerAdapter mViewPagerAdapter;
     private LinearLayout llDots;
     private TextView[] dots;
-    private int[] layouts;
     private Button btnSkip, btnNext;
+    private LoginButton btnSignFb;
+
+    private CallbackManager mCallbackManager;
+    private AccessTokenTracker mAccessTokenTracker;
+    private ProfileTracker mProfileTracker;
+
+    private int[] layouts;
+    private boolean loggedIn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +67,13 @@ public class WalkthroughActivity extends AppCompatActivity {
         assignValue();
         assignListener();
         setupViewPager();
+        initializeLoginFbButton(btnSignFb);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
+        super.onActivityResult(requestCode, responseCode, intent);
+        mCallbackManager.onActivityResult(requestCode, responseCode, intent);
     }
 
     private void initializeLayout() {
@@ -53,6 +81,7 @@ public class WalkthroughActivity extends AppCompatActivity {
         llDots = (LinearLayout) findViewById(R.id.dots_walkthrough);
         btnSkip = (Button) findViewById(R.id.btn_walkthrough_skip);
         btnNext = (Button) findViewById(R.id.btn_walkthrough_next);
+        btnSignFb = (LoginButton) findViewById(R.id.btn_walkthrough_facebook);
     }
 
     private void assignListener() {
@@ -90,6 +119,13 @@ public class WalkthroughActivity extends AppCompatActivity {
 
         // making notification bar transparent
         changeStatusBarColor();
+
+        loggedIn = AccessToken.getCurrentAccessToken() == null;
+        if (loggedIn) {
+            Toast.makeText(getApplicationContext(), "Not login ", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Is login ", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setupViewPager() {
@@ -160,6 +196,108 @@ public class WalkthroughActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    public void initializeLoginFbButton(LoginButton loginButton) {
+        mCallbackManager = CallbackManager.Factory.create();
+
+//        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//
+//            }
+//        });
+
+        FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(final LoginResult loginResult) {
+                mAccessTokenTracker = new AccessTokenTracker() {
+                    @Override
+                    protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
+//                        if (newToken != null) {
+//                            fbToken = newToken.getToken();
+//                            SharedPreferences prefs = getSharedPreferences(Globalvars.PREFS_ADSVOKAT, Context.MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = prefs.edit();
+//                            editor.putString(Globalvars.PREFS_TAG_FB_ACCESS_TOKEN, newToken.getToken());
+//                            editor.apply();
+//                            if (profile == null) {
+//                                profile = new User();
+//                                profile.setFbAccessToken(fbToken);
+//                            } else {
+//                                profile.setFbAccessToken(fbToken);
+//                            }
+//                        } else {
+//                            fbToken = null;
+//                        }
+                    }
+                };
+                mAccessTokenTracker.startTracking();
+
+                if (Profile.getCurrentProfile() == null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile old, Profile newProfile) {
+                            Profile fbProfile = newProfile;
+
+//                            if (fbProfile != null) {
+//                                profile = new User();
+//                                profile.setFbId(fbProfile.getId());
+//                                profile.setFirstName(fbProfile.getFirstName());
+//                                profile.setLastName(fbProfile.getLastName());
+//                                profile.setMiddleName(fbProfile.getLastName());
+//                                profile.setName(fbProfile.getName());
+//                                profile.setLinkUri(fbProfile.getLinkUri());
+//
+//                                profile.setFbAccessToken(loginResult.getAccessToken().getToken());
+//                                getFbProfileData(profile, loginResult);
+//                            }
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                } else {
+                    Profile fbProfile = Profile.getCurrentProfile();
+//                    if (fbProfile != null) {
+//                        profile = new User();
+//                        profile.setFbId(fbProfile.getId());
+//                        profile.setFirstName(fbProfile.getFirstName());
+//                        profile.setLastName(fbProfile.getLastName());
+//                        profile.setMiddleName(fbProfile.getLastName());
+//                        profile.setName(fbProfile.getName());
+//                        profile.setLinkUri(fbProfile.getLinkUri());
+//
+//                        profile.setFbAccessToken(loginResult.getAccessToken().getToken());
+//                        getFbProfileData(profile, loginResult);
+//                    }
+                    Toast.makeText(getApplicationContext(), "Login success : "+fbProfile, Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onCancel() {
+                //canceled
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                e.printStackTrace();
+            }
+        };
+
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
+        loginButton.registerCallback(mCallbackManager, callback);
+//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
     }
 
     /**

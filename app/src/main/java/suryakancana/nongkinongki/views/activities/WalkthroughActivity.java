@@ -39,7 +39,6 @@ import suryakancana.nongkinongki.R;
  */
 
 public class WalkthroughActivity extends AppCompatActivity {
-
     private ViewPager viewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private LinearLayout llDots;
@@ -95,7 +94,7 @@ public class WalkthroughActivity extends AppCompatActivity {
                     // move to next screen
                     viewPager.setCurrentItem(current);
                 } else {
-//                    launchHomeScreen();
+                    launchDashboard();
                 }
             }
         });
@@ -103,7 +102,7 @@ public class WalkthroughActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                launchHomeScreen();
+                launchDashboard();
             }
         });
     }
@@ -298,6 +297,12 @@ public class WalkthroughActivity extends AppCompatActivity {
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         loginButton.registerCallback(mCallbackManager, callback);
 //        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+    }
+
+    private void launchDashboard() {
+        Intent mainIntent = new Intent(WalkthroughActivity.this, AuthActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 
     /**

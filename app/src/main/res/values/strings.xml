@@ -9,4 +9,13 @@
     <!--region facebook-->
     <string name="facebook_app_id">1994820380792199</string>
     <string name="fb_login_protocol_scheme">fb1994820380792199</string>
+
+    <!--region permission-->
+    <string name="permission_granted">Permission Granted!</string>
+    <string name="permission_denied">Permission Denied!</string>
+
+    <!---->
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_history">History</string>
+    <string name="bottom_nav_my_account">My Account</string>
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/action_home"
+        icon="@drawable/ic_home"
+        title="@string/bottom_nav_home" />
+    <tab
+        id="@+id/action_history"
+        icon="@drawable/ic_history"
+        title="@string/bottom_nav_history" />
+    <tab
+        id="@+id/action_my_account"
+        icon="@drawable/ic_account_circle"
+        title="@string/bottom_nav_my_account" />
+</tabs>
